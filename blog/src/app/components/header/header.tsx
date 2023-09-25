@@ -10,20 +10,12 @@ import { checkAuth } from "@/app/utils/checkAuth";
 import { GetServerSidePropsContext } from "next";
 
 export const Header = async (ctx: GetServerSidePropsContext) => {
-  "use server";
   const authToken = await checkAuth(ctx);
   if ("redirect" in authToken) {
     return authToken;
   }
   const router = useRouter();
   const selectedMenu = router.pathname;
-
-  const onClickLogout = () => {
-    if (window.confirm("Вы действительно хотите выйти?")) {
-      Api.auth.logout();
-      location.href = "/";
-    }
-  };
 
   return (
     <Layout.Header className={styles.root}>
@@ -49,7 +41,7 @@ export const Header = async (ctx: GetServerSidePropsContext) => {
         </div>
 
         <div className={styles.headerRight}>
-          {authToken ? (
+          {/* {authToken ? (
             <Popover
               trigger="click"
               content={
@@ -69,7 +61,7 @@ export const Header = async (ctx: GetServerSidePropsContext) => {
               onSelect={({ key }) => router.push(key)}
               items={[{ key: "/auth", label: "Login" }]}
             />
-          )}
+          )} */}
         </div>
       </div>
     </Layout.Header>
