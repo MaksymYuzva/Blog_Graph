@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "./themeToggle.module.scss";
+import { Switch } from "antd";
 
 const ThemeToggle: React.FC = () => {
-  return <h4 className={styles.theme}>themeToggle</h4>;
+  return <Switch />;
 };
 
 export default ThemeToggle;

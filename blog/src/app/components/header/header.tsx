@@ -9,11 +9,11 @@ import * as Api from "@/app/api";
 import { checkAuth } from "@/app/utils/checkAuth";
 import { GetServerSidePropsContext } from "next";
 
-export const Header = async (ctx: GetServerSidePropsContext) => {
-  const authToken = await checkAuth(ctx);
-  if ("redirect" in authToken) {
-    return authToken;
-  }
+export const Header = async () => {
+  // const authToken = await checkAuth(ctx);
+  // if ("redirect" in authToken) {
+  //   return authToken;
+  // }
   const router = useRouter();
   const selectedMenu = router.pathname;
 
