@@ -1,10 +1,12 @@
 import "./globals.css";
+import React from "react";
 import { GraphQlProvider } from "./components/provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Header } from "@/app/components/header/header";
 import { Footer } from "antd/es/layout/layout";
 import { ThemeContextProvider } from "@/app/context/ThemeContext";
+import ThemeProvider from "./providers/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,13 +23,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ThemeContextProvider>
-        <body className={inter.className}>
-          <GraphQlProvider>
-            <Header />
-            {children}
-            <Footer />
-          </GraphQlProvider>
-        </body>
+        <ThemeProvider>
+          <body className={inter.className}>
+            <GraphQlProvider>
+              <Header />
+              {children}
+              <Footer />
+            </GraphQlProvider>
+          </body>
+        </ThemeProvider>
       </ThemeContextProvider>
     </html>
   );
