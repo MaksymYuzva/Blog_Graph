@@ -1,4 +1,3 @@
-"use server";
 import axios from "@/app/core/axios";
 import {
   LoginFormDTO,

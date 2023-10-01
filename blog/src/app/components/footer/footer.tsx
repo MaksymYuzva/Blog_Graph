@@ -1,6 +1,7 @@
+"use client";
 import Image from "next/image";
 import styles from "@/app/components/Footer/Footer.module.scss";
-function Footer() {
+export const Footer = () => {
   return (
     <div className={styles.footer}>
       <div className={styles.social}>
@@ -11,6 +12,4 @@ function Footer() {
       </div>
     </div>
   );
-}
-
-export default Footer;
+};

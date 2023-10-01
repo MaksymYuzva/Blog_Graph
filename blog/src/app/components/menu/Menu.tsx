@@ -1,3 +1,4 @@
+"use client";
 import styles from "@/app/components/Menu/Menu.module.scss";
 
 function Menu() {

@@ -14,11 +14,12 @@ import typeDefs from "@/app/pages/api/graphql/schemas";
 import resolvers from "@/app/pages/api/graphql/resolvers";
 import allowCors from "@/app/utils/cors";
 
-const apolloServer: ApolloServer<Context> = new ApolloServer({
+const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req, res }) => ({ req, res, prisma }),
 });
 
-const handler = startServerAndCreateNextHandler<NextRequest>(apolloServer);
+const handler = startServerAndCreateNextHandler<NextRequest>(apolloServer, {
+  context: async (req) => ({ req }),
+});
 export default handler;

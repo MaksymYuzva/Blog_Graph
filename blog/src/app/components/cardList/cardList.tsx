@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Pagination from "../pagination/pagination";
 import styles from "@/app/components/cardList/CardList.module.scss";

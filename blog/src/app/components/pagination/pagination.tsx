@@ -1,3 +1,4 @@
+"use client";
 import styles from "@/app/components/pagination/Pagination.module.scss";
 
 function Pagination() {

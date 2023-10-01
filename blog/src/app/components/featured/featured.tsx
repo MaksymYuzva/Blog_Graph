@@ -1,3 +1,4 @@
+"use client";
 import styles from "@/app/components/Featured/Featured.module.scss";
 
 function Featured() {

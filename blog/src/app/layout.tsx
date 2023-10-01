@@ -1,10 +1,11 @@
+"use client";
 import "./globals.css";
 import React from "react";
-import { GraphQlProvider } from "./components/provider";
+import { GraphQlProvider } from "@/app/providers/provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Header } from "@/app/components/header/header";
-import { Footer } from "antd/es/layout/layout";
+import { Footer } from "@/app/components/footer/footer";
 import { ThemeContextProvider } from "@/app/context/ThemeContext";
 import ThemeProvider from "./providers/ThemeProvider";
 
@@ -21,18 +22,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <ThemeContextProvider>
-        <ThemeProvider>
-          <body className={inter.className}>
-            <GraphQlProvider>
-              <Header />
-              {children}
-              <Footer />
-            </GraphQlProvider>
-          </body>
-        </ThemeProvider>
-      </ThemeContextProvider>
-    </html>
+    <>
+      <html>
+        <body>
+          <ThemeContextProvider>
+            <Header />
+            {children}
+            <Footer />
+          </ThemeContextProvider>
+        </body>
+      </html>
+    </>
   );
 }
