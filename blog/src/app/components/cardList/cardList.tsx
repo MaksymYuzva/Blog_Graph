@@ -1,13 +1,36 @@
-"use client";
 import React from "react";
-import Pagination from "../pagination/pagination";
 import styles from "@/app/components/cardList/CardList.module.scss";
-const cardList: React.FC = () => {
+import Pagination from "@/app/components/pagination/pagination";
+import Image from "next/image";
+import Card from "@/app/components/card/card";
+import { QueryResult, useQuery } from "@apollo/client";
+import getPosts from "@/app/api/graphql/queries/getPosts.gql";
+import { query } from "@/app/api/graphql/queries/getPosts";
+
+const CardList = () => {
+  console.log("Card list component");
+  const { loading, error, data } = useQuery(query);
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
+  const { posts } = data;
+  console.log(posts);
   return (
     <div className={styles.container}>
-      <Pagination />
+      <h1 className={styles.title}>Recent Posts</h1>
+      <div className={styles.posts}>
+        {posts?.map((item: { _id: any }) => (
+          <Card item={item} key={item._id} />
+        ))}
+      </div>
+      {/* <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} /> */}
     </div>
   );
 };
 
-export default cardList;
+export default CardList;

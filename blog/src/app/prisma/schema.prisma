@@ -8,18 +8,20 @@ datasource db {
 }
 
 model Author {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Posts[]
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  posts     Posts[]
+  createdAt DateTime @default(now())
 }
 
 model Posts {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   title     String
   content   String?
   image     String
-  published Boolean @default(false)
-  author    Author  @relation(fields: [authorId], references: [id])
+  published Boolean  @default(false)
+  author    Author   @relation(fields: [authorId], references: [id])
   authorId  Int
+  createdAt DateTime @default(now())
 }

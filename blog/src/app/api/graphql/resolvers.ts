@@ -1,4 +1,4 @@
-import { Context } from "@/app/pages/api/graphql/route";
+import { Context } from "@/app/api/graphql/route";
 
 const resolvers = {
   Query: {
@@ -12,21 +12,13 @@ const resolvers = {
     },
     // get all novels
     posts: async (_parent: any, _args: any, context: Context) => {
-      return await context.prisma.posts.findMany({
-        include: { author: true },
-      });
+      return await context.prisma.posts.findMany({});
+    },
+    author: async (parent: any, _args: any, context: Context) => {
+      return await context.prisma.author.findMany({});
     },
   },
   // nested resolve function to get auhtors in novels
-  Post: {
-    Authors: async (parent: any, _args: any, context: Context) => {
-      return await context.prisma.author.findMany({
-        where: {
-          posts: parent.id,
-        },
-      });
-    },
-  },
   Mutation: {
     // add novel
     addPost: async (_parent: any, args: any, context: Context) => {

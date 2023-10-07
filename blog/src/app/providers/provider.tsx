@@ -1,10 +1,18 @@
-import React from "react";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+"use client";
 
-export const GraphQlProvider = ({ children }: { children: any }) => {
-  const client = new ApolloClient({
-    uri: "http://localhost:3000/api/graphql",
-    cache: new InMemoryCache(),
-  });
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "http://localhost:3000/api/graphql",
+  cache: new InMemoryCache(),
+});
+
+interface IGraphQlProviderProps {
+  children: React.ReactNode;
+}
+
+const GraphQlProvider: React.FC<IGraphQlProviderProps> = ({ children }) => {
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
+
+export default GraphQlProvider;

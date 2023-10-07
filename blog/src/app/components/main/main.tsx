@@ -1,4 +1,3 @@
-"use client";
 import styles from "@/app/components/main/Main.module.scss";
 import { useQuery } from "@apollo/client";
 import client from "@apollo/client";

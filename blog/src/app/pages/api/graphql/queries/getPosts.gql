@@ -1,8 +1,0 @@
-query getPosts {
-  posts {
-    id
-    username
-    title
-    image
-  }
-}
