@@ -1,6 +1,9 @@
 import { gql } from "graphql-tag";
+import { GraphQLDateTime } from "graphql-scalars";
 
 const typeDefs = gql`
+  scalar DateTime
+
   type Query {
     posts: [Posts]
     post(id: ID!): Post
@@ -12,7 +15,7 @@ const typeDefs = gql`
     email: String
     name: String
     posts: [Posts]
-    createdAt: String
+    createdAt: DateTime
   }
 
   type Posts {
@@ -21,7 +24,7 @@ const typeDefs = gql`
     content: String
     author: [Author]
     image: String
-    createdAt: String
+    createdAt: DateTime
   }
   type Post {
     id: String
