@@ -10,26 +10,31 @@ const AuthLinks = () => {
       location.href = "/";
     }
   };
-  const status = "authenticated";
+  const status: "authenticated" | "nonauthenticated" = "authenticated";
   return (
     <>
-      (status === "nonauthenticated" ? (<Link href="/login">Login</Link>
-      <Popover
-        trigger="click"
-        content={
-          <Button onClick={onClickLogout} type="primary" danger>
-            Exit
-          </Button>
-        }
-      >
-        <Avatar>A</Avatar>
-      </Popover>
-      ): (
-      <>
-        <Link href="/write">Write</Link>
-        <span className={styles.link}>Logout</span>
-      </>
-      ))
+      {status === "nonauthenticated" ? (
+        <>
+          <Link href="/login">Login</Link>
+          <Popover
+            trigger="click"
+            content={
+              <Button onClick={onClickLogout} type="primary" danger>
+                Exit
+              </Button>
+            }
+          >
+            <Avatar>A</Avatar>
+          </Popover>
+        </>
+      ) : (
+        <>
+          <Link href="/write">Write</Link>
+          <span className={styles.link} onClick={onClickLogout}>
+            Logout
+          </span>
+        </>
+      )}
     </>
   );
 };

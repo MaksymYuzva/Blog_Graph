@@ -5,6 +5,7 @@ import styles from "./Header.module.scss";
 import { CloudOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "../themeToggle/themeToggle";
+import AuthLinks from "../authLinks/authLinks";
 
 export const Header = async () => {
   const router = useRouter();
@@ -33,7 +34,10 @@ export const Header = async () => {
           <ThemeToggle />
         </div>
 
-        <div className={styles.headerRight}></div>
+        <div className={styles.headerRight}>
+          <AuthLinks />
+          <Avatar />
+        </div>
       </div>
     </Layout.Header>
   );
