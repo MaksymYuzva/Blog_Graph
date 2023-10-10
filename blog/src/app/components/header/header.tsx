@@ -36,7 +36,6 @@ export const Header = async () => {
 
         <div className={styles.headerRight}>
           <AuthLinks />
-          <Avatar />
         </div>
       </div>
     </Layout.Header>

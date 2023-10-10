@@ -7,7 +7,6 @@ import CardList from "./components/cardList/cardList";
 export default function Home() {
   return (
     <>
-      <Main />
       <CardList />
     </>
   );
