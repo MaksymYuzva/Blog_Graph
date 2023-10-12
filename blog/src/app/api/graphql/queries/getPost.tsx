@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-export const queryPosts = gql`
+export const queryPost = gql`
   query {
     posts {
       id

@@ -1,8 +1,9 @@
 import styles from "@/app/components/card/card.module.scss";
 import Image from "next/image";
 import Link from "next/link";
+import { CardProps } from "../dto/item.dto";
 
-const Card = ({ item, key }) => {
+const Card: React.FC<CardProps> = ({ item, key }) => {
   return (
     <div className={styles.container} key={key}>
       {item.image && (
@@ -15,7 +16,7 @@ const Card = ({ item, key }) => {
           <span className={styles.date}>{item.createdAt.substring(0, 10)}</span>
           <span className={styles.category}>{item.catSlug}</span>
         </div>
-        <Link href={`/posts/${item.slug}`}>
+        <Link href={`/posts/${item.title}`}>
           <h1>{item.title}</h1>
         </Link>
 

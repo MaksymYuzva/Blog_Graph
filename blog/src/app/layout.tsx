@@ -1,4 +1,6 @@
 "use client";
+
+import { AuthContextProvider } from "./providers/AuthProvider";
 import "./globals.css";
 import React from "react";
 import GraphQlProvider from "@/app/providers/provider";
@@ -27,9 +29,11 @@ export default function RootLayout({
         <body>
           <GraphQlProvider>
             <ThemeContextProvider>
-              <Header />
-              {children}
-              <Footer />
+              <AuthContextProvider>
+                <Header />
+                {children}
+                <Footer />
+              </AuthContextProvider>
             </ThemeContextProvider>
           </GraphQlProvider>
         </body>

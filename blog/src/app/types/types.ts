@@ -11,3 +11,11 @@ export interface QueryResult {
 }
 
 //Item
+export interface Item {
+  _id: string;
+  createdAt: string;
+  catSlug: string;
+  title: string;
+  slug: string;
+  image: string;
+}

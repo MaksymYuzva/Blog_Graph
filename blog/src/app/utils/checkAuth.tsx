@@ -9,6 +9,7 @@ export const checkAuth = async (ctx: GetServerSidePropsContext) => {
     const { _token } = nookies.get(ctx);
 
     axios.defaults.headers.Authorization = "Bearer " + _token;
+    return {};
   } catch (err) {
     return {
       redirect: {
