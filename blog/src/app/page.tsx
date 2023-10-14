@@ -2,14 +2,18 @@
 import { GetServerSidePropsContext } from "next";
 
 import Image from "next/image";
-import styles from "@/app/styles/page.module.css";
 import { Main } from "./components/main/main";
 import Card from "./components/card/card";
 import CardList from "./components/cardList/cardList";
+import Menu from "./components/menu/Menu";
+import styles from "@/app/homepage.module.scss";
 export default function Home() {
   return (
     <>
-      <CardList />
+      <div className={styles.content}>
+        <CardList />
+        <Menu />
+      </div>
     </>
   );
 }
