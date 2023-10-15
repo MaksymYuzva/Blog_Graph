@@ -13,9 +13,11 @@ const typeDefs = gql`
   type Author {
     id: String
     email: String
-    name: String
+    username: String
+    password: String
     posts: [Posts]
     createdAt: DateTime
+    token: String
   }
 
   type Posts {
@@ -31,7 +33,25 @@ const typeDefs = gql`
     author: [Author]
   }
 
+  input loginUser {
+    email: String
+    password: String
+  }
+  input registerUser {
+    username: String
+    email: String
+    password: String
+    confirmPassword: String
+  }
+
   type Mutation {
+    loginUser(email: String, password: String): loginUser
+    registerUser(
+      username: String
+      email: String
+      password: String
+      confirmPassword: String
+    ): registerUser
     addPost(image: String, title: String): Posts
     updatePost(id: ID!, title: String, image: String): Posts
     deletePost(id: ID!): Posts

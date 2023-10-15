@@ -1,4 +1,3 @@
-"use client";
 import styles from "@/app/components/Menu/Menu.module.scss";
 import Link from "next/link";
 

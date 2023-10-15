@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import ThemeToggle from "../themeToggle/themeToggle";
 import AuthLinks from "../authLinks/authLinks";
 
-export const Header = async () => {
+export const Header = () => {
   const router = useRouter();
   const selectedMenu = router.pathname;
 

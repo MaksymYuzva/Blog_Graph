@@ -20,7 +20,12 @@ const resolvers = {
   },
   // nested resolve function to get auhtors in novels
   Mutation: {
-    // add novel
+    loginUser: (parent: any, args: any, context: Context) => {
+      const { email, password } = args;
+    },
+    registerUser: (parent: any, args: any) => {
+      const { username, email, password, confirmPassword } = args;
+    },
     addPost: async (_parent: any, args: any, context: Context) => {
       return await context.prisma.posts.create({
         data: {
@@ -59,8 +64,8 @@ const resolvers = {
     addAuthor: async (_parent: any, args: any, context: Context) => {
       return await context.prisma.author.create({
         data: {
-          id: args.id,
-          name: args.name,
+          // id: args.id,
+          username: args.username,
           email: args.email,
         },
       });
