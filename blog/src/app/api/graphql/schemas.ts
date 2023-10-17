@@ -37,21 +37,26 @@ const typeDefs = gql`
     email: String
     password: String
   }
+  type loginUserOutput {
+    token: String
+  }
   input registerUser {
     username: String
     email: String
     password: String
     confirmPassword: String
   }
-
+  type registerUserOutput {
+    success: Boolean
+  }
   type Mutation {
-    loginUser(email: String, password: String): loginUser
+    loginUser(email: String, password: String): loginUserOutput
     registerUser(
       username: String
       email: String
       password: String
       confirmPassword: String
-    ): registerUser
+    ): registerUserOutput
     addPost(image: String, title: String): Posts
     updatePost(id: ID!, title: String, image: String): Posts
     deletePost(id: ID!): Posts

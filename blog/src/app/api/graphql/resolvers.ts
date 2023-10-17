@@ -67,6 +67,8 @@ const resolvers = {
           // id: args.id,
           username: args.username,
           email: args.email,
+          password: args.password,
+          token: args.token,
         },
       });
     },
