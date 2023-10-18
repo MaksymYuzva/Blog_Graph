@@ -11,7 +11,6 @@ export const queryPosts = gql`
     author {
       id
       email
-      name
     }
   }
 `;

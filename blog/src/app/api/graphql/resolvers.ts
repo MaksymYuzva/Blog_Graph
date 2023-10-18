@@ -1,4 +1,5 @@
 import { Context } from "@/app/api/graphql/route";
+import authService from "../services/auth.service";
 
 const resolvers = {
   Query: {
@@ -20,11 +21,21 @@ const resolvers = {
   },
   // nested resolve function to get auhtors in novels
   Mutation: {
-    loginUser: (parent: any, args: any, context: Context) => {
+    loginUser: async (parent: any, args: any, context: Context) => {
       const { email, password } = args;
+      const result = await authService.login(email, password);
+      if (!result) {
+        throw new Error("Invalid credentials");
+      }
+      return result;
     },
-    registerUser: (parent: any, args: any) => {
+    registerUser: async (parent: any, args: any) => {
       const { username, email, password, confirmPassword } = args;
+      const result = await authService.register(username, email, password);
+      if (!result) {
+        throw new Error("Invalid credentials");
+      }
+      return result;
     },
     addPost: async (_parent: any, args: any, context: Context) => {
       return await context.prisma.posts.create({

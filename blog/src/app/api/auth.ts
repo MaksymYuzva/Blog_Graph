@@ -1,29 +1,60 @@
-import axios from "@/app/core/axios";
-import {
-  LoginFormDTO,
-  LoginResponseDTO,
-  RegisterFormDTO,
-  RegisterResponseDTO,
-  User,
-} from "@/app/api/dto/auth.dto";
-import { destroyCookie } from "nookies";
+import { useMutation, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { LoginFormDTO, RegisterFormDTO, User } from "@/app/api/dto/auth.dto";
 
-export const login = async (
-  values: LoginFormDTO
-): Promise<LoginResponseDTO> => {
-  return (await axios.post("/auth/login", values)).data;
+// Define your GraphQL queries and mutations
+const LOGIN_MUTATION = gql`
+  mutation Login($input: LoginFormDTO!) {
+    login(input: $input) {
+      token
+      user {
+        id
+        username
+        email
+        // Add other user fields as needed
+      }
+    }
+  }
+`;
+
+const REGISTER_MUTATION = gql`
+  mutation Register($input: RegisterFormDTO!) {
+    register(input: $input) {
+      token
+      user {
+        id
+        username
+        email
+        // Add other user fields as needed
+      }
+    }
+  }
+`;
+
+const GET_ME_QUERY = gql`
+  query GetMe {
+    me {
+      id
+      username
+      email
+      // Add other user fields as needed
+    }
+  }
+`;
+
+// Use Apollo Client to execute GraphQL mutations and queries
+export const useLogin = () => {
+  return useMutation(LOGIN_MUTATION);
 };
 
-export const register = async (
-  values: RegisterFormDTO
-): Promise<RegisterResponseDTO> => {
-  return (await axios.post("/auth/register", values)).data;
+export const useRegister = () => {
+  return useMutation(REGISTER_MUTATION);
 };
 
-export const getMe = async (): Promise<User> => {
-  return (await axios.get("/users/me")).data;
+export const useGetMe = () => {
+  return useQuery(GET_ME_QUERY);
 };
 
 export const logout = () => {
-  destroyCookie(null, "_token", { path: "/" });
+  // You can handle logout logic here (e.g., clearing tokens, cookies, or local storage).
 };

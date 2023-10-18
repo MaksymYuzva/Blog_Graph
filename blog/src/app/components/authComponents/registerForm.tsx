@@ -22,7 +22,7 @@ export const RegisterForm = () => {
         path: "/",
       });
 
-      location.href = "/dashboard";
+      location.href = "/";
     } catch (error) {
       console.error("Registration form", error);
     }
@@ -57,6 +57,18 @@ export const RegisterForm = () => {
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Password"
+          />
+        </Form.Item>
+        <Form.Item
+          name="confirm password"
+          rules={[
+            { required: true, message: "Please input your Confirm Password!" },
+          ]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Confirm Password"
           />
         </Form.Item>
         <Form.Item>
