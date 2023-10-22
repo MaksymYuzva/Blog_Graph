@@ -6,7 +6,6 @@ export const GET_MY_PROFILE_QUERY = gql`
       id
       username
       email
-      // Add other user fields as needed
     }
   }
 `;

@@ -7,14 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Author {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  username  String?
-  password  String?
-  posts     Posts[]
-  createdAt DateTime @default(now())
-  token     String?
+model User {
+  id              Int      @id @default(autoincrement())
+  email           String   @unique
+  username        String?
+  password        String?
+  confirmPassword String?
+  createdAt       DateTime @default(now())
+  token           String?
+  Posts           Posts[]
 }
 
 model Posts {
@@ -23,7 +24,7 @@ model Posts {
   content   String?
   image     String
   published Boolean  @default(false)
-  author    Author   @relation(fields: [authorId], references: [id])
-  authorId  Int
   createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int
 }

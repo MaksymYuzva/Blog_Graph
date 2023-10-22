@@ -7,10 +7,10 @@ const typeDefs = gql`
   type Query {
     posts: [Posts]
     post(id: ID!): Post
-    author: [Author]
+    user: [User]
   }
 
-  type Author {
+  type User {
     id: String
     email: String
     username: String
@@ -24,13 +24,13 @@ const typeDefs = gql`
     id: String
     title: String
     content: String
-    author: [Author]
+    userid: [User]
     image: String
     createdAt: DateTime
   }
   type Post {
     id: String
-    author: [Author]
+    User: [User]
   }
 
   input loginUser {
@@ -40,28 +40,22 @@ const typeDefs = gql`
   type loginUserOutput {
     token: String
   }
-  input registerUser {
+  input RegisterInput {
     username: String
     email: String
     password: String
     confirmPassword: String
   }
   type registerUserOutput {
-    success: Boolean
+    token: String
   }
   type Mutation {
-    loginUser(email: String, password: String): loginUserOutput
-    registerUser(
-      username: String
-      email: String
-      password: String
-      confirmPassword: String
-    ): registerUserOutput
+    registerUser(registerInput: RegisterInput): User
     addPost(image: String, title: String): Posts
     updatePost(id: ID!, title: String, image: String): Posts
     deletePost(id: ID!): Posts
-    addAuthor(novelId: ID!, name: String): Author
-    deleteAuthor(id: ID!): Author
+    addUser(novelId: ID!, name: String): User
+    deleteUser(id: ID!): User
   }
 `;
 export default typeDefs;

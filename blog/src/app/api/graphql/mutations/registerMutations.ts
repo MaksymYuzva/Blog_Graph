@@ -8,7 +8,6 @@ export const LOGIN_MUTATION = gql`
         id
         username
         email
-        // Add other user fields as needed
       }
     }
   }
@@ -22,7 +21,6 @@ export const REGISTER_MUTATION = gql`
         id
         username
         email
-        // Add other user fields as needed
       }
     }
   }

@@ -7,7 +7,10 @@ export interface LoginResponseDTO {
   token: string;
 }
 
-export type RegisterFormDTO = LoginFormDTO & { username: string };
+export type RegisterFormDTO = LoginFormDTO & {
+  username: string;
+  confirmPassword: string;
+};
 export type RegisterResponseDTO = LoginResponseDTO;
 
 export interface User {
@@ -15,4 +18,5 @@ export interface User {
   email: string;
   username: string;
   password: string;
+  confirmPassword: string | null;
 }

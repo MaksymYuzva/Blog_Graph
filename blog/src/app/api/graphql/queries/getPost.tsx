@@ -8,7 +8,7 @@ export const queryPost = gql`
       image
       createdAt
     }
-    author {
+    user {
       id
       email
     }

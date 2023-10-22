@@ -8,9 +8,5 @@ export const queryPosts = gql`
       image
       createdAt
     }
-    author {
-      id
-      email
-    }
   }
 `;

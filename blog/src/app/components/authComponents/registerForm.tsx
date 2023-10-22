@@ -1,27 +1,28 @@
 "use client";
+import {
+  LOGIN_MUTATION,
+  REGISTER_MUTATION,
+} from "@/app/api/graphql/mutations/registerMutations";
 import { Form, Input, Checkbox, Button, notification } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import styles from "@/app/components/authComponents/Auth.module.scss";
 import { LoginResponseDTO, RegisterFormDTO } from "@/app/api/dto/auth.dto";
 import * as Api from "@/app/api";
 import { setCookie } from "nookies";
+import { useMutation } from "@apollo/client";
 
 export const RegisterForm = () => {
+  const [registerUser] = useMutation(REGISTER_MUTATION);
   const onSubmit = async (values: RegisterFormDTO) => {
     try {
-      const tokenPromise = Api.auth.register(values); // Returns a promise
-      const tokenResponse: LoginResponseDTO = await tokenPromise; // Wait for the promise to resolve
-
-      const token = tokenResponse.token;
-      notification.success({
-        message: "Success!",
-        duration: 2,
+      const { data } = await registerUser({
+        variables: {
+          email: values.email,
+          username: values.username,
+          password: values.password,
+          confirmPassword: values.confirmPassword,
+        },
       });
-
-      setCookie(null, "_token", token, {
-        path: "/",
-      });
-
       location.href = "/";
     } catch (error) {
       console.error("Registration form", error);
@@ -60,14 +61,14 @@ export const RegisterForm = () => {
           />
         </Form.Item>
         <Form.Item
-          name="confirm password"
+          name="confirmPassword"
           rules={[
             { required: true, message: "Please input your Confirm Password!" },
           ]}
         >
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
+            type="confirmPassword"
             placeholder="Confirm Password"
           />
         </Form.Item>
