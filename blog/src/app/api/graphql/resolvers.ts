@@ -25,15 +25,34 @@ const resolvers = {
     },
   },
   // nested resolve function to get auhtors in novels
-  Mutation: {
-    // loginUser: async (parent: any, args: any, context: Context) => {
-    //   const { email, password } = args;
-    //   const result = await authService.login(email, password);
-    //   if (!result) {
-    //     throw new Error("Invalid credentials");
-    //   }
-    //   return result;
-    // },
+ loginUser: async (
+    parent: any,
+    { loginInput }: { loginInput: User },
+    context: Context
+  ) => {
+    const { email, password } = loginInput;
+    const existingUser = await context.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+    if (
+      existingUser &&
+      (await bcrypt.compare(password, existingUser.password))
+    ) {
+      const token = jwt.sign(
+        { user_id: existingUser.id, email },
+        process.env.JWT_SECRET,
+        { expiresIn: "30d" }
+      );
+      existingUser.token = token;
+      return {
+        token,
+      };
+    } else {
+			throw new ApolloError("Incorrect password", "INCORRECT_PASSWORD")
+		}
+  },
     registerUser: async (
       parent: any,
       { registerInput }: { registerInput: User },
