@@ -3,20 +3,20 @@ import { Avatar, Button, Popover, Menu } from "antd";
 import * as Api from "@/app/api";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-
+import { useContext } from "react";
+import { AuthContext } from "@/app/context/authContext";
+const { user, logout } = useContext(AuthContext);
 const AuthLinks = () => {
   const router = useRouter();
   const selectedMenu = usePathname();
   const onClickLogout = () => {
-    if (window.confirm("Вы действительно хотите выйти?")) {
-      Api.auth.logout();
-      location.href = "/";
-    }
+    logout();
+    location.href = "/";
   };
-  const status: "authenticated" | "nonauthenticated" = "nonauthenticated";
+
   return (
     <>
-      {status === "authenticated" ? (
+      {user ? (
         <Popover
           trigger="click"
           content={

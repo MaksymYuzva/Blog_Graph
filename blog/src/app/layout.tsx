@@ -1,6 +1,4 @@
 "use client";
-
-import { AuthContextProvider } from "./providers/AuthProvider";
 import "./globals.css";
 import React from "react";
 import GraphQlProvider from "@/app/providers/provider";
@@ -10,7 +8,7 @@ import { Header } from "@/app/components/header/header";
 import { Footer } from "@/app/components/footer/footer";
 import { ThemeContextProvider } from "@/app/context/ThemeContext";
 import ThemeProvider from "./providers/ThemeProvider";
-
+import { AuthProvider } from "@/app/context/authContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -27,15 +25,15 @@ export default function RootLayout({
     <>
       <html>
         <body>
-          <GraphQlProvider>
-            <ThemeContextProvider>
-              <AuthContextProvider>
+          <AuthProvider>
+            <GraphQlProvider>
+              <ThemeContextProvider>
                 <Header />
                 {children}
                 <Footer />
-              </AuthContextProvider>
-            </ThemeContextProvider>
-          </GraphQlProvider>
+              </ThemeContextProvider>
+            </GraphQlProvider>
+          </AuthProvider>
         </body>
       </html>
     </>

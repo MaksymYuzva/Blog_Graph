@@ -1,4 +1,12 @@
 "use client";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/app/context/authContext";
+import { useForm } from "@/app/utils/hooks";
+import { useMutation } from "@apollo/client";
+import { GraphQLError } from "graphql";
+
+import { LOGIN_USER } from "@/app/api/graphql/mutations/registerMutations";
+
 import { Form, Input, Checkbox, Button, notification } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import styles from "@/app/components/authComponents/Auth.module.scss";
@@ -9,21 +17,33 @@ import * as Api from "@/app/api";
 import error from "next/error";
 
 export const LoginForm = () => {
-  const onSubmit = async (values: LoginFormDTO) => {
-    try {
-      const response = await Api.auth.login(values);
-      const token = response.token;
-      notification.success({
-        message: "You have been registered succesfully!",
-        duration: 2,
-      });
+  const context = useContext(AuthContext);
+  const [errors, setErrors] = useState<readonly GraphQLError[]>([]);
+  function loginUserCallback() {
+    console.log("Callback hit");
+    loginUser();
+  }
 
-      setCookie(null, "_token", token, {
-        path: "/",
-      });
-    } catch (error) {}
-    console.error(error);
-  };
+  const { onChange, onSubmit, values } = useForm(loginUserCallback, {
+    email: "",
+    password: "",
+  });
+  const [loginUser, { loading }] = useMutation(LOGIN_USER, {
+    update(proxy, { data: { loginUser: userData } }) {
+      context.login(userData);
+      location.href = "/";
+    },
+    onError({ graphQLErrors }) {
+      setErrors(graphQLErrors);
+    },
+    variables: { loginInput: values },
+  });
+
+  const errorNotifications = errors.map((error, index) => (
+    <div key={index}>
+      <>{notification.error({ message: error.message })}</>
+    </div>
+  ));
 
   return (
     <div className={styles.formBlock}>
@@ -35,6 +55,7 @@ export const LoginForm = () => {
           <Input
             prefix={<MailOutlined className="site-form-item-icon" />}
             placeholder="Email"
+            onChange={onChange}
           />
         </Form.Item>
         <Form.Item
@@ -45,6 +66,7 @@ export const LoginForm = () => {
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Password"
+            onChange={onChange}
           />
         </Form.Item>
         <Form.Item>
@@ -61,7 +83,7 @@ export const LoginForm = () => {
             htmlType="submit"
             className="login-form-button"
           >
-            Log in
+            Login
           </Button>
           Or <a href="">register now!</a>
         </Form.Item>

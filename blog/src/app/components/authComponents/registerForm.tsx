@@ -1,7 +1,13 @@
 "use client";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/app/context/authContext";
+import { useForm } from "@/app/utils/hooks";
+import { useMutation } from "@apollo/client";
+import { GraphQLError } from "graphql";
+
 import {
-  LOGIN_MUTATION,
-  REGISTER_MUTATION,
+  LOGIN_USER,
+  REGISTER_USER,
 } from "@/app/api/graphql/mutations/registerMutations";
 import { Form, Input, Checkbox, Button, notification } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
@@ -9,26 +15,36 @@ import styles from "@/app/components/authComponents/Auth.module.scss";
 import { LoginResponseDTO, RegisterFormDTO } from "@/app/api/dto/auth.dto";
 import * as Api from "@/app/api";
 import { setCookie } from "nookies";
-import { useMutation } from "@apollo/client";
-
 export const RegisterForm = () => {
-  const [registerUser] = useMutation(REGISTER_MUTATION);
-  const onSubmit = async (values: RegisterFormDTO) => {
-    try {
-      const { data } = await registerUser({
-        variables: {
-          email: values.email,
-          username: values.username,
-          password: values.password,
-          confirmPassword: values.confirmPassword,
-        },
-      });
-      location.href = "/";
-    } catch (error) {
-      console.error("Registration form", error);
-    }
-  };
+  const context = useContext(AuthContext);
+  const [errors, setErrors] = useState<readonly GraphQLError[]>([]);
+  function registerUserCallback() {
+    console.log("Callback hit");
+    registerUser();
+  }
 
+  const { onChange, onSubmit, values } = useForm(registerUserCallback, {
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [registerUser, { loading }] = useMutation(REGISTER_USER, {
+    update(proxy, { data: { registerUser: userData } }) {
+      context.login(userData);
+      location.href = "/";
+    },
+    onError({ graphQLErrors }) {
+      setErrors(graphQLErrors);
+    },
+    variables: { registerInput: values },
+  });
+
+  const errorNotifications = errors.map((error, index) => (
+    <div key={index}>
+      <>{notification.error({ message: error.message })}</>
+    </div>
+  ));
   return (
     <div className={styles.formBlock}>
       <Form name="basic" labelCol={{ span: 8 }} onFinish={onSubmit}>
@@ -39,6 +55,7 @@ export const RegisterForm = () => {
           <Input
             prefix={<MailOutlined className="site-form-item-icon" />}
             placeholder="Email"
+            onChange={onChange}
           />
         </Form.Item>
         <Form.Item
@@ -48,6 +65,7 @@ export const RegisterForm = () => {
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Username"
+            onChange={onChange}
           />
         </Form.Item>
         <Form.Item
@@ -58,6 +76,7 @@ export const RegisterForm = () => {
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Password"
+            onChange={onChange}
           />
         </Form.Item>
         <Form.Item
@@ -70,6 +89,7 @@ export const RegisterForm = () => {
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="confirmPassword"
             placeholder="Confirm Password"
+            onChange={onChange}
           />
         </Form.Item>
         <Form.Item>
@@ -88,6 +108,7 @@ export const RegisterForm = () => {
           >
             Register in
           </Button>
+          {errorNotifications}
           Or <a href="">register now!</a>
         </Form.Item>
       </Form>
