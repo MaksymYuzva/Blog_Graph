@@ -1,11 +1,11 @@
 import "dotenv/config";
 import { Context } from "@/app/api/graphql/route";
 import authService from "../services/auth.service";
-import { User } from "@/app/api/dto/auth.dto";
+
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { ApolloError } from "apollo-server-core";
-
+const JWT_SECRET: string = process.env.JWT_SECRET as string;
 const resolvers = {
   Query: {
     //get novel by id
@@ -24,38 +24,43 @@ const resolvers = {
       return await context.prisma.user.findMany({});
     },
   },
-  // nested resolve function to get auhtors in novels
- loginUser: async (
-    parent: any,
-    { loginInput }: { loginInput: User },
-    context: Context
-  ) => {
-    const { email, password } = loginInput;
-    const existingUser = await context.prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
-    if (
-      existingUser &&
-      (await bcrypt.compare(password, existingUser.password))
-    ) {
-      const token = jwt.sign(
-        { user_id: existingUser.id, email },
-        process.env.JWT_SECRET,
-        { expiresIn: "30d" }
-      );
-      existingUser.token = token;
-      return {
-        token,
-      };
-    } else {
-			throw new ApolloError("Incorrect password", "INCORRECT_PASSWORD")
-		}
-  },
+  Mutation: {
+    loginUser: async (
+      parent: any,
+      { loginInput }: { loginInput: { email: string; password: string } },
+      context: Context
+    ) => {
+      const { email, password } = loginInput;
+      const existingUser = await context.prisma.user.findUnique({
+        where: {
+          email,
+        },
+      });
+      if (
+        existingUser &&
+        existingUser.password &&
+        (await bcrypt.compare(password, existingUser.password))
+      ) {
+        const token = jwt.sign(
+          { user_id: existingUser.id, email },
+          JWT_SECRET,
+          {
+            expiresIn: "30d",
+          }
+        );
+        existingUser.token = token;
+        return existingUser;
+      } else {
+        throw new ApolloError("Incorrect password", "INCORRECT_PASSWORD");
+      }
+    },
     registerUser: async (
       parent: any,
-      { registerInput }: { registerInput: User },
+      {
+        registerInput,
+      }: {
+        registerInput: { username: string; email: string; password: string };
+      },
       context: Context
     ) => {
       const { username, email, password } = registerInput;
@@ -82,14 +87,12 @@ const resolvers = {
           password: hashedPassword, // You should hash the password before saving it securely.
         },
       });
-      const token = jwt.sign(
-        { user_id: newUser.id, email },
-        process.env.JWT_SECRET,
-        { expiresIn: "30d" }
-      );
+      const token = jwt.sign({ user_id: newUser.id, email }, JWT_SECRET, {
+        expiresIn: "30d",
+      });
       newUser.token = token;
 
-      return { token };
+      return newUser;
     },
     addPost: async (_parent: any, args: any, context: Context) => {
       return await context.prisma.posts.create({

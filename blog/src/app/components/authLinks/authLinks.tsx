@@ -5,8 +5,8 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useContext } from "react";
 import { AuthContext } from "@/app/context/authContext";
-const { user, logout } = useContext(AuthContext);
 const AuthLinks = () => {
+  const { user, logout } = useContext(AuthContext);
   const router = useRouter();
   const selectedMenu = usePathname();
   const onClickLogout = () => {
