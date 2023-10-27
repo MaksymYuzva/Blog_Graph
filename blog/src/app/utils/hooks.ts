@@ -8,7 +8,6 @@ export const useForm = (callback: () => void, initialState = {}) => {
     console.log(values);
   };
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
     callback();
   };
   return {

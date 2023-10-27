@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { AuthContext } from "@/app/context/authContext";
 import { useForm } from "@/app/utils/hooks";
 import { useMutation } from "@apollo/client";
@@ -24,13 +24,14 @@ export const RegisterForm = () => {
   }
 
   const { onChange, onSubmit, values } = useForm(registerUserCallback, {
-    username: "",
     email: "",
+    username: "",
     password: "",
     confirmPassword: "",
   });
   const [registerUser, { loading }] = useMutation(REGISTER_USER, {
     update(proxy, { data: { registerUser: userData } }) {
+      console.log(userData);
       context.login(userData);
       location.href = "/";
     },
@@ -45,6 +46,7 @@ export const RegisterForm = () => {
       <>{notification.error({ message: error.message })}</>
     </div>
   ));
+
   return (
     <div className={styles.formBlock}>
       <Form name="basic" labelCol={{ span: 8 }} onFinish={onSubmit}>
@@ -55,6 +57,7 @@ export const RegisterForm = () => {
           <Input
             prefix={<MailOutlined className="site-form-item-icon" />}
             placeholder="Email"
+            name="email"
             onChange={onChange}
           />
         </Form.Item>
@@ -65,6 +68,7 @@ export const RegisterForm = () => {
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Username"
+            name="username"
             onChange={onChange}
           />
         </Form.Item>
@@ -76,6 +80,7 @@ export const RegisterForm = () => {
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Password"
+            name="password"
             onChange={onChange}
           />
         </Form.Item>
@@ -89,6 +94,7 @@ export const RegisterForm = () => {
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="confirmPassword"
             placeholder="Confirm Password"
+            name="confirmPassword"
             onChange={onChange}
           />
         </Form.Item>
@@ -105,6 +111,7 @@ export const RegisterForm = () => {
             type="primary"
             htmlType="submit"
             className="login-form-button"
+            onSubmit={onSubmit}
           >
             Register in
           </Button>

@@ -113,6 +113,7 @@ const resolvers = {
         data: {
           title: args.title,
           image: args.image,
+          content: args.content,
         },
       });
     },

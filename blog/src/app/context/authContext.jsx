@@ -7,7 +7,7 @@ const initialState = {
 const cookies = parseCookies();
 
 if (cookies.token) {
-  const decodedToken = jwtDecode(localStorage.getItem("token"));
+  const decodedToken = jwtDecode(cookies.token);
   if (decodedToken.exp * 1000 < Date.now) {
     destroyCookie(null, "token");
   } else {
