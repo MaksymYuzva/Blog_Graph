@@ -29,6 +29,7 @@ export const Header = () => {
             items={[
               { key: "/", label: "Main" },
               { key: "/profile", label: "Profile" },
+              { key: "/post", label: "Post" },
             ]}
           />
           <ThemeToggle />

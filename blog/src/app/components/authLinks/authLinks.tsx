@@ -5,28 +5,30 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useContext } from "react";
 import { AuthContext } from "@/app/context/authContext";
+
 const AuthLinks = () => {
   const { user, logout } = useContext(AuthContext);
   const router = useRouter();
   const selectedMenu = usePathname();
   const onClickLogout = () => {
     logout();
-    location.href = "/";
   };
 
   return (
     <>
       {user ? (
-        <Popover
-          trigger="click"
-          content={
-            <Button onClick={onClickLogout} type="primary" danger>
-              Exit
-            </Button>
-          }
-        >
-          <Avatar>A</Avatar>
-        </Popover>
+        <>
+          <Popover
+            trigger="click"
+            content={
+              <Button onClick={onClickLogout} type="primary" danger>
+                Exit
+              </Button>
+            }
+          >
+            <Avatar>A</Avatar>
+          </Popover>
+        </>
       ) : (
         <Menu
           className={styles.topMenu}

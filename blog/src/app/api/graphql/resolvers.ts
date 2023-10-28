@@ -59,11 +59,16 @@ const resolvers = {
       {
         registerInput,
       }: {
-        registerInput: { username: string; email: string; password: string };
+        registerInput: {
+          username: string;
+          email: string;
+          password: string;
+          confirmPassword: string;
+        };
       },
       context: Context
     ) => {
-      const { username, email, password } = registerInput;
+      const { username, email, password, confirmPassword } = registerInput;
       // Check if the user with the same email already exists
       const existingUser = await context.prisma.user.findUnique({
         where: {
@@ -77,20 +82,22 @@ const resolvers = {
           `USER_ALREADY_EXISTS`
         );
       }
-
+      if (password !== confirmPassword) {
+        throw new ApolloError("Passwords do not match", "PASSWORD_MISMATCH");
+      }
       const hashedPassword = await bcrypt.hash(password, 10);
       // Create a new user and save it to the database
+      const token = jwt.sign({ email }, JWT_SECRET, {
+        expiresIn: "30d",
+      });
       const newUser = await context.prisma.user.create({
         data: {
           username,
           email,
-          password: hashedPassword, // You should hash the password before saving it securely.
+          password: hashedPassword,
+          token: token,
         },
       });
-      const token = jwt.sign({ user_id: newUser.id, email }, JWT_SECRET, {
-        expiresIn: "30d",
-      });
-      newUser.token = token;
 
       return newUser;
     },
