@@ -1,5 +1,6 @@
+"use client";
 import { useContext } from "react";
-import { useRouter } from "next/router"; // Import your router library here
+import { useRouter } from "next/navigation"; // Import your router library here
 import { AuthContext } from "@/app/context/authContext";
 
 const useCheckAuth = () => {

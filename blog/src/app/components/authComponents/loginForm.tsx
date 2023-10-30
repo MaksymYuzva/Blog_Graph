@@ -26,7 +26,6 @@ export const LoginForm = () => {
 
   const { onChange, onSubmit, values } = useForm(loginUserCallback, {
     email: "",
-    password: "",
   });
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(proxy, { data: { loginUser: userData } }) {
@@ -55,6 +54,7 @@ export const LoginForm = () => {
           <Input
             prefix={<MailOutlined className="site-form-item-icon" />}
             placeholder="Email"
+            name="email"
             onChange={onChange}
           />
         </Form.Item>
@@ -66,6 +66,7 @@ export const LoginForm = () => {
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Password"
+            name="password"
             onChange={onChange}
           />
         </Form.Item>

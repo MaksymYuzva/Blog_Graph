@@ -1,4 +1,5 @@
-.content {
+.container {
   display: flex;
-  gap: 50px;
+  position: relative;
+  min-height: 100vh;
 }
