@@ -28,9 +28,11 @@ export default function RootLayout({
           <AuthProvider>
             <GraphQlProvider>
               <ThemeContextProvider>
-                <Header />
-                {children}
-                <Footer />
+                <ThemeProvider>
+                  <Header />
+                  {children}
+                  <Footer />
+                </ThemeProvider>
               </ThemeContextProvider>
             </GraphQlProvider>
           </AuthProvider>

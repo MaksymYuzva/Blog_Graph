@@ -1,5 +1,6 @@
-import styles from "@/app/components/Menu/Menu.module.scss";
+import styles from "@/app/components/menu/Menu.module.scss";
 import Link from "next/link";
+import Image from "next/image";
 
 const Menu = () => {
   return (
@@ -7,7 +8,14 @@ const Menu = () => {
       <h2 className={styles.title}>Most popular</h2>
       <div className={styles.items}>
         <Link href="/" className={styles.item}>
-          <div className={styles.imageContainer}></div>
+          <div className={styles.imageContainer}>
+            <Image
+              src="/fashion.png"
+              alt="fashion"
+              fill
+              className={styles.image}
+            />
+          </div>
           <div className={styles.textContainer}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </div>

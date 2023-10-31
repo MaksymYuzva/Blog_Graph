@@ -10,6 +10,7 @@
 }
 .title {
   font-size: 28px;
+  color: var(--textColor);
 }
 
 @media screen and (max-width: 1024px) {
@@ -31,6 +32,7 @@
   align-items: center;
   gap: 20px;
   flex-direction: column;
+  text-decoration: none;
 }
 
 .imageContainer {
@@ -50,6 +52,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  color: var(--softTextColor);
 }
 .postTitle {
   font-size: 18px;

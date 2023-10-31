@@ -106,7 +106,7 @@ const resolvers = {
         data: {
           title: args.title,
           image: args.image,
-          User: args.user,
+          userId: args.user,
           content: args.content,
         },
       });

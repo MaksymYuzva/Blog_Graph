@@ -18,7 +18,11 @@ const Post = () => {
   }
 
   const { posts } = data;
-  return <h2>Post</h2>;
+  return (
+    <div className={styles.container}>
+      <h2>Post</h2>
+    </div>
+  );
 };
 
 export default Post;

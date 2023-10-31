@@ -10,7 +10,7 @@ import styles from "@/app/homepage.module.scss";
 export default function Home() {
   return (
     <>
-      <div className={styles.content}>
+      <div className={styles.container}>
         <CardList />
         <Menu />
       </div>

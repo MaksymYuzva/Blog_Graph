@@ -2,10 +2,11 @@
 import React from "react";
 import { Layout, Avatar, Menu, Popover, Button } from "antd";
 import styles from "./Header.module.scss";
-import { CloudOutlined } from "@ant-design/icons";
+import { FormOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "../themeToggle/themeToggle";
 import AuthLinks from "../authLinks/authLinks";
+import Link from "next/link";
 
 export const Header = () => {
   const router = useRouter();
@@ -15,10 +16,12 @@ export const Header = () => {
     <Layout.Header className={styles.root}>
       <div className={styles.headerInner}>
         <div className={styles.headerLeft}>
-          <h2>
-            <CloudOutlined />
-            Blog
-          </h2>
+          <Link href="/">
+            <h2 className={styles.headerTitle}>
+              <FormOutlined />
+              Blog
+            </h2>
+          </Link>
 
           <Menu
             className={styles.topMenu}

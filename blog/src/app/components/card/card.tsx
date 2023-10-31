@@ -16,7 +16,7 @@ const Card: React.FC<CardProps> = ({ item, key }) => {
           <span className={styles.date}>{item.createdAt.substring(0, 10)}</span>
           <span className={styles.category}>{item.catSlug}</span>
         </div>
-        <Link href={`/posts/${item.title}`}>
+        <Link className={styles.postTitle} href={`/posts/${item.title}`}>
           <h1>{item.title}</h1>
         </Link>
 
@@ -24,8 +24,8 @@ const Card: React.FC<CardProps> = ({ item, key }) => {
           className={styles.desc}
           dangerouslySetInnerHTML={{ __html: item?.desc.substring(0, 60) }}
         /> */}
-        <Link href={`/posts/${item.slug}`} className={styles.link}>
-          Read More
+        <Link className={styles.link} href={`/posts/${item.slug}`}>
+          <h4> Read More </h4>
         </Link>
       </div>
     </div>
