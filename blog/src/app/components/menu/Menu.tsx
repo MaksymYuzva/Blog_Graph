@@ -7,15 +7,16 @@ const Menu = () => {
     <div className={styles.container}>
       <h2 className={styles.title}>Most popular</h2>
       <div className={styles.items}>
+        <div className={styles.imageContainer}>
+          <Image
+            src="/culture.png"
+            alt="fashion"
+            width={150}
+            height={150}
+            className={styles.image}
+          />
+        </div>
         <Link href="/" className={styles.item}>
-          <div className={styles.imageContainer}>
-            <Image
-              src="/fashion.png"
-              alt="fashion"
-              fill
-              className={styles.image}
-            />
-          </div>
           <div className={styles.textContainer}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </div>
